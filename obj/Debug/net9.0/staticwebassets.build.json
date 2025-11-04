@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "QlhPTrYoKjtxoDCcRRre4HYA+WLQvey9t6OTCohibgU=",
+  "Source": "SocialFeed.Api",
+  "BasePath": "_content/SocialFeed.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

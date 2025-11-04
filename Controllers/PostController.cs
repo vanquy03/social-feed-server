@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SocialFeed.Api.Data;
 using SocialFeed.Api.Dtos;
@@ -61,6 +62,7 @@ namespace SocialFeed.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Create(CreatePostDto dto)
         {
             var user = await _context.Users.FindAsync(dto.UserId);
@@ -74,6 +76,7 @@ namespace SocialFeed.Api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
             var post = await _context.Posts.FindAsync(id);

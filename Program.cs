@@ -7,8 +7,20 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:3000") 
+                  .AllowAnyHeader()
+                  .AllowAnyMethod()
+                  .AllowCredentials();
+        });
+});
 
+// Add services to the container.
 builder.Services.AddControllers();
 
 // JWT setting
@@ -83,6 +95,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+//add CORS
+app.UseCors("AllowReactApp");
 
 // JWT setting
 app.UseAuthentication();

@@ -53,12 +53,16 @@ namespace SocialFeed.Api.Controllers
             var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Username == userDto.Username && u.PasswordHash == userDto.Password);
 
             if (user == null)
-                return Unauthorized();
+                return Unauthorized(new { message = "Invalid username or password" });
 
             // sinh token
             var token = GenerateJwtToken(user);
 
-            return Ok(new { token });
+            return Ok(new {
+                message = "Login successful",
+                user,
+                token,
+            });
         }
 
         [HttpGet("{id}")]

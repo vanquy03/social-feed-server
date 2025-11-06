@@ -12,14 +12,14 @@ using System.Text;
 namespace SocialFeed.Api.Controllers
 {
     [ApiController]
-    [Route("api/users")]
-    public class UserController : Controller
+    [Route("api/[controller]")]
+    public class UsersController : Controller
     {
         private readonly AppDbContext _dbContext;
         private readonly IConfiguration _config;
 
 
-        public UserController(AppDbContext dbContext, IConfiguration config)
+        public UsersController(AppDbContext dbContext, IConfiguration config)
         {
             _dbContext = dbContext;
             _config = config;

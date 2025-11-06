@@ -17,7 +17,8 @@ namespace SocialFeed.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> LikeOrUnlike(LikeDto dto)
+        [Route("likeorunlike")]
+        public async Task<IActionResult> LikeOrUnlike([FromBody] LikeDto dto)
         {
             var existing = await _context.Likes
                 .FirstOrDefaultAsync(l => l.UserId == dto.UserId && l.PostId == dto.PostId);

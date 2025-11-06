@@ -12,6 +12,7 @@
         public string Content { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
         public string Username { get; set; } = string.Empty;
+        public bool IsLiked { get; set; }
         public int LikeCount { get; set; }
         public int CommentCount { get; set; }
     }

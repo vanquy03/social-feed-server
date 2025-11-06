@@ -18,7 +18,8 @@ namespace SocialFeed.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PostResponseDto>>> GetAll()
+        [Route("get_all")]
+        public async Task<ActionResult<IEnumerable<PostResponseDto>>> GetAll(int userId)
         {
             var posts = await _context.Posts
                 .Include(p => p.User)
@@ -31,39 +32,20 @@ namespace SocialFeed.Api.Controllers
                     Content = p.Content,
                     CreatedAt = p.CreatedAt,
                     Username = p.User!.Username,
+                    IsLiked = p.Likes!.Any(l => l.UserId == userId),
                     LikeCount = p.Likes!.Count,
                     CommentCount = p.Comments!.Count
+
                 })
                 .ToListAsync();
 
             return Ok(posts);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<PostResponseDto>> GetById(int id)
-        {
-            var post = await _context.Posts
-                .Include(p => p.User)
-                .Include(p => p.Comments)
-                .Include(p => p.Likes)
-                .FirstOrDefaultAsync(p => p.Id == id);
-
-            if (post == null) return NotFound();
-
-            return new PostResponseDto
-            {
-                Id = post.Id,
-                Content = post.Content,
-                CreatedAt = post.CreatedAt,
-                Username = post.User!.Username,
-                LikeCount = post.Likes!.Count,
-                CommentCount = post.Comments!.Count
-            };
-        }
-
         [HttpPost]
+        [Route("Create")]
         [Authorize]
-        public async Task<IActionResult> Create(CreatePostDto dto)
+        public async Task<IActionResult> Create([FromBody] CreatePostDto dto)
         {
             var user = await _context.Users.FindAsync(dto.UserId);
             if (user == null) return BadRequest("Invalid user");
@@ -76,6 +58,7 @@ namespace SocialFeed.Api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Route("Delete")]
         [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
